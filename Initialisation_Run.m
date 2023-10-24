@@ -1,5 +1,5 @@
 %all of the three pulse deer written by me into one script. 
-
+Fart = 0;
 function OneScript()
     % System Specifications. 
     sys.magnet = 0.3333333; %T
