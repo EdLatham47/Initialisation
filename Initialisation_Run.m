@@ -1,8 +1,7 @@
 %all of the three pulse deer written by me into one script. 
-Fart = 0;
-function OneScript()
+function Initialisation_Run()
     % System Specifications. 
-    sys.magnet = 0.3333333; %T
+    sys.magnet = 0.3333333; %T - 320mT
     % SPins to be viewed.
     sys.isotopes = {'E','E'}; %Two seperated electrons, as oppose to two in one shell (E2)
     sys.disable={'trajlevel'}; % (For less than five spins, speeds up computation.)
@@ -12,11 +11,11 @@ function OneScript()
     inter.zeeman.euler = cell(1,2);
     inter.coordinates = cell(2,1);
     % First Spin g-values then euler angle relative to B0.
-    inter.zeeman.eigs{1}=[2.0034 2.0031 2.0027];
+    inter.zeeman.eigs{1}=[2.100 2.103 2.106];
     inter.zeeman.euler{1}=[0 0 0];
     inter.coordinates{1}=[0.00 0.00 0.00];
     % Second Spin g-values then euler angle relative to B0.
-    inter.zeeman.eigs{2}=[2.005 2.007 2.009];
+    inter.zeeman.eigs{2}=[2.150 2.153 2.156];
     inter.zeeman.euler{2}=[0 0 0];
     inter.coordinates{2}=[30.00 0.00 0.00]; % Angstrungs
     %inter.coupling.scalar={0 30*10^6; 0 0}; % Coupling
@@ -25,10 +24,10 @@ function OneScript()
     %   provided provides the heavy 'interference'.
 
     % - Relaxation
-    inter.relaxation={'lindblad'}; %lindblad
-    inter.lind_r1_rates=[1.0 1.0]*10^2; % Hz
-    inter.lind_r2_rates=[1.0 1.0]*10^5; % Hz
-    inter.temperature=10; %Kelvin. Default: Spinach uses the high-temperature approximation. 
+    %inter.relaxation={'lindblad'}; %lindblad
+    %inter.lind_r1_rates=[1.0 1.0]*10^2; % Hz
+    %inter.lind_r2_rates=[1.0 1.0]*10^5; % Hz
+    inter.temperature=0; %Kelvin. Default: Spinach uses the high-temperature approximation. 
                         % Specifying zero makes the system start at the lowest energy eigenstate of the Hamiltonian.
     inter.rlx_keep='diagonal';%Not sure what these do..... will require further investigation.
     inter.equilibrium='zero';
@@ -70,7 +69,7 @@ function OneScript()
     % Doesn't change even at 10^9
 
     % Sweep width in each dimension of the spectrum (Hz). - RESOLVED
-    parameters.sweep = 1e8;     % Width of Sweep for First Figure.
+    parameters.sweep = 4e8;     % Width of Sweep for First Figure.
     % Linewidth?
     parameters.fwhm=0.01;    %line FWHM, Tesla
 
@@ -84,13 +83,13 @@ function OneScript()
     %pulse_rnk 1 would be a perfect pulse. 2 does narruto change. 3 will aid in more complex-multi rotations. 
     parameters.pulse_rnk=[2 2 2];
     % Pulse duration
-    parameters.pulse_dur=[19e-9 40e-9 38e-9];       % altered 30ns suggestion - second spin takes slightly longer.
+    parameters.pulse_dur=[21e-9 42e-9 42e-9];       % altered 30ns suggestion - second spin takes slightly longer.
     % Phase on initial wave
     parameters.pulse_phi=[pi pi pi];
     % Power of the pulse
-    parameters.pulse_pwr=2*pi*[12e6 12e6 12e6];
+    parameters.pulse_pwr=2*pi*[8e6 8e6 8e6];
     % Frequency of the pulse - independantly specified is a bit odd.
-    parameters.pulse_frq=[9.34e9 9.363e9 9.345e9];
+    parameters.pulse_frq=[9.79e9 9.02e9 9.79e9];
     %        GAPS BETWEEN PULSES
     parameters.p1_p3_gap=1e-6;
     %fidelity of p2 
@@ -108,5 +107,5 @@ function OneScript()
     %stateinfo(spin_system, Happiness, 4)
     %works but they arent set up right.
     relaxan(spin_system)
-    OneScript_Plots(spin_system, parameters)
+    Initialisation_Plots(spin_system, parameters)
     end

@@ -1,4 +1,4 @@
-function fids = OneScript_IndependantPulse(spin_system, parameters, H, R, K)
+function fids = Initialisation_IndependantPulse(spin_system, parameters, H, R, K)
     % This function shows how soft pulses affect the magnetisation. 
     % It is a hypothetical experiment where a soft pulse specified by the user
     % is performed, immediately followed by an ideal pi/2 pulse on all spins 

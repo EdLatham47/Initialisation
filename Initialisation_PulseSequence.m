@@ -1,4 +1,4 @@
-function echo_stack=OneScript_PulseSequence(spin_system, parameters, H, R, K)
+function echo_stack=Initialisation_PulseSequence(spin_system, parameters, H, R, K)
     L=H+1i*R+1i*K;
     % Electron Pulse Operators
     Ep=operator(spin_system,'L+', parameters.spins{1});
