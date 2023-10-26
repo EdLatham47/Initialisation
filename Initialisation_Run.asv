@@ -3,11 +3,11 @@ function Initialisation_Run()
     % System Specifications. 
     sys.magnet = 0.3333333; %T - 320mT
     % SPins to be viewed.
-    sys.isotopes = {'E3'}; %Two seperated electrons, as oppose to two in one shell (E2)
+    sys.isotopes = {'E','E'}; %Two seperated electrons, as oppose to two in one shell (E2)
     sys.disable={'trajlevel'}; % (For less than five spins, speeds up computation.)
     %           SPIN INTERACTIONS
     % defines structure of spins. 
-    inter.coupling.matrix{1,1}=[6 0 0; 0 6 0; 0 0 -12]*10^6;
+    inter.coupling.matrix{1,1}=[600]
     %inter.zeeman.eigs = cell(1,2);
     %inter.zeeman.euler = cell(1,2);
     %inter.coordinates = cell(2,1);
@@ -74,11 +74,11 @@ function Initialisation_Run()
     % Linewidth?
     parameters.fwhm=0.01;    %line FWHM, Tesla
 
-    parameters.spins = {'E3'}; % spins of the molecule that will be activlley operated on.
+    parameters.spins = {'E'}; % spins of the molecule that will be activlley operated on.
     % a combined initial state of both spins, alligned in the Bz direction. 
-    parameters.rho0=state(spin_system,'Lz','E3');
+    parameters.rho0=state(spin_system,'Lz','E');
     % detection state of the output files. (pi/2 tf L+), can add more than one detection state.
-    parameters.coil = state(spin_system,'L+','E3');
+    parameters.coil = state(spin_system,'L+','E');
     %       THE INDIVIDUAL PULSES
     % DEER pulse parameters - all params can be lists for multi-pulse sequences. 
     %pulse_rnk 1 would be a perfect pulse. 2 does narruto change. 3 will aid in more complex-multi rotations. 

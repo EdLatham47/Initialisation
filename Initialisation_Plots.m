@@ -18,8 +18,7 @@ function Initialisation_Plots(spin_system,parameters)
     drawnow();
     
     % Second Sim. complete Successive pulses with evolution in middle.
-    echo_stack = powder(spin_system, @Initialisation_PulseSequence, parameters, parameters.assumptions );
-
+    echo_stack = Initialisation_powder(spin_system, @Initialisation_PulseSequence, parameters, parameters.assumptions );
     echo_axis=1e9*linspace(-parameters.echo_time/2,parameters.echo_time/2, parameters.echo_nsteps+1);
     % time axis for the Deer trace.
     %deer_axis=1e6*linspace(0,parameters.p1_p3_gap, parameters.p2_nsteps+1);

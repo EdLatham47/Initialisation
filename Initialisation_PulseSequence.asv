@@ -1,4 +1,4 @@
-function echo_stack=Initialisation_PulseSequence(spin_system, parameters, H, R, K)
+function [ReducedDenseMats, echo_stack]=Initialisation_PulseSequence(spin_system, parameters, H, R, K)
     L=H+1i*R+1i*K;
     % Electron Pulse Operators
     Ep=operator(spin_system,'L+', parameters.spins{1});
@@ -33,7 +33,8 @@ function echo_stack=Initialisation_PulseSequence(spin_system, parameters, H, R, 
     echo_location=parameters.p1_p3_gap+parameters.pulse_dur(1)/2+...
                                        parameters.pulse_dur(2)-parameters.echo_time/2;
     rho_stack=evolution(spin_system,L,[],rho_stack,echo_location,1,'final');
-
+    DMF=P*rho_stack;
+    ReducedDenseMats=[DM1 DMF];
     stepsize = parameters.echo_time/parameters.echo_nsteps;
     % Final Evolution
     echo_stack=evolution(spin_system,L,parameters.coil,rho_stack,stepsize,parameters.echo_nsteps,'observable');
