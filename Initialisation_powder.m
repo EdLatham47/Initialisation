@@ -75,7 +75,7 @@
 %
 % <https://spindynamics.org/wiki/index.php?title=powder.m>
 
-function answer=powder(spin_system,pulse_sequence,parameters,assumptions)
+function [rho_stack,echo_stack]=Initialisation_powder(spin_system,pulse_sequence,parameters,assumptions)
 
 % Show the banner
 banner(spin_system,'sequence_banner'); 
@@ -198,19 +198,45 @@ parfor (n=1:numel(weights),nworkers)
     report(spin_system,'running the pulse sequence...');
     
     % Run the simulation (it might return a structure)
-    ans_array{n}=pulse_sequence(spin_system,localpar,H,R,K); %#ok<PFBNS>
+    [rho_stack{n}, ans_array{n}]=pulse_sequence(spin_system,localpar,H,R,K); %#ok<PFBNS>
     
 end
 
 % Decide the return array
 if parameters.sum_up
-    
+    %-----------------------------------------------------------------
     % Return weighted sum
     answer=sph_grid.weights(1)*ans_array{1};
+    rho_stack=sph_grid.weights(1)*rho_stack{:,1};
     for n=2:numel(ans_array)
         answer=answer+sph_grid.weights(n)*ans_array{n};
+        rho_stack(:)=rho_stack(:)+sph_grid.weights(n)*rho_stack{:,n};
     end
-    
+    %-----------------------------------------------------------------
+    % Return weighted sum Initialise
+    answer=sph_grid.weights(1)*ans_array{1};
+    if iscell(rho_stack{1})
+        % rho_stack is a list of lists of matrices
+        for i = 1:numel(rho_stack{1})
+            rho_stack{1}{i} = sph_grid.weights(1)*rho_stack{1}{i};
+        end
+    else
+        % rho_stack is a list of matrices
+        rho_stack{1} = sph_grid.weights(1)*rho_stack{1};
+    end
+    for n=2:numel(ans_array) % Post Initialisation
+        answer=answer+sph_grid.weights(n)*ans_array{n};
+        if iscell(rho_stack{n})
+            % rho_stack is a list of lists of matrices
+            for i = 1:numel(rho_stack{n})
+                rho_stack{1}{i} = rho_stack{1}{i} + sph_grid.weights(n)*rho_stack{n}{i};
+            end
+        else
+            % rho_stack is a list of matrices
+            rho_stack{1} = rho_stack{1} + sph_grid.weights(n)*rho_stack{n};
+        end
+    end
+    %-----------------------------------------------------------------
     % Inform the user
     report(spin_system,'returning powder averaged pulse sequence output...');
     

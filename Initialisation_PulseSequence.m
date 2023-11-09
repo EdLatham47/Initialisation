@@ -1,13 +1,12 @@
-function echo_stack=Initialisation_PulseSequence(spin_system, parameters, H, R, K)
+function [rho_stack, echo_stack]=Initialisation_PulseSequence(spin_system, parameters, H, R, K)
     L=H+1i*R+1i*K;
     % Electron Pulse Operators
-    Ep=operator(spin_system,'L+', parameters.spins{1});
+    Ep=operator(spin_system,'L-', parameters.spins{1});
     Ex=(Ep+Ep')/2; Ey=(Ep-Ep')/2i;
 
     % Freq Offsets. 
     parameters.pulse_frq=-spin_system.inter.magnet*spin('E')/(2*pi)-...
                             parameters.pulse_frq-parameters.offset;
-
     % First Pulse on initialise state (parameters.rho0)
     rho=shaped_pulse_af(spin_system,L,Ex,Ey,parameters.rho0, parameters.pulse_frq(1),parameters.pulse_pwr(1),...
                                                             parameters.pulse_dur(1),parameters.pulse_phi(1), ...
