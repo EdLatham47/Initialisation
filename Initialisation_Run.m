@@ -12,14 +12,14 @@ function Initialisation_Run()
     %inter.zeeman.euler = cell(1,2);
     %inter.coordinates = cell(2,1);
     % First Spin g-values then euler angle relative to B0.
-    inter.coupling.eigs{1}=[3 3 -6];
-    inter.coupling.euler{1}=[0 0 0];
-    %inter.zeeman.eigs{1}=[3.00 3.00 3.00];
-    %inter.zeeman.euler{1}=[0 0 0];
+    %inter.coupling.eigs{1}=[3 3 -6];
+    %inter.coupling.euler{1}=[0 0 0];
+    inter.zeeman.eigs{1}=[2 2 2];
+    inter.zeeman.euler{1}=[0 0 0];
     %inter.coordinates{1}=[0.00 0.00 0.00];
     % Second Spin g-values then euler angle relative to B0.
     %inter.zeeman.eigs{2}=[2.150 2.153 2.156];
-    %inter.zeeman.euler{2}=[0 0 0];
+    %inter.zeeman.euler{2}=[0 0 0];ww
     %inter.coordinates{2}=[30.00 0.00 0.00]; % Angstrungs
     %inter.coupling.scalar={0 30*10^6; 0 0}; % Coupling
     %   -    Providinng a specific Coupling such as this, makes the

@@ -75,7 +75,7 @@
 %
 % <https://spindynamics.org/wiki/index.php?title=powder.m>
 
-function [rho_stack,echo_stack]=Initialisation_powder(spin_system,pulse_sequence,parameters,assumptions)
+function [rho_stack,answer]=Initialisation_powder(spin_system,pulse_sequence,parameters,assumptions)
 
 % Show the banner
 banner(spin_system,'sequence_banner'); 
@@ -201,17 +201,16 @@ parfor (n=1:numel(weights),nworkers)
     [rho_stack{n}, ans_array{n}]=pulse_sequence(spin_system,localpar,H,R,K); %#ok<PFBNS>
     
 end
-
 % Decide the return array
 if parameters.sum_up
     %-----------------------------------------------------------------
     % Return weighted sum
-    answer=sph_grid.weights(1)*ans_array{1};
-    rho_stack=sph_grid.weights(1)*rho_stack{:,1};
-    for n=2:numel(ans_array)
-        answer=answer+sph_grid.weights(n)*ans_array{n};
-        rho_stack(:)=rho_stack(:)+sph_grid.weights(n)*rho_stack{:,n};
-    end
+    %answer=sph_grid.weights(1)*ans_array{1};
+    %rho_stack=sph_grid.weights(1)*rho_stack{:,1};
+    %for n=2:numel(ans_array)
+    %    answer=answer+sph_grid.weights(n)*ans_array{n};
+    %    rho_stack():)=rho_stack(:)+sph_grid.weights(n)*rho_stack{:,n};
+    %end
     %-----------------------------------------------------------------
     % Return weighted sum Initialise
     answer=sph_grid.weights(1)*ans_array{1};

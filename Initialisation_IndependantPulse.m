@@ -1,4 +1,4 @@
-function [rho_stack,fids] = Initialisation_IndependantPulse(spin_system, parameters, H, R, K)
+function [rho_stack, fids] = Initialisation_IndependantPulse(spin_system, parameters, H, R, K)
     % This function shows how soft pulses affect the magnetisation. 
     % It is a hypothetical experiment where a soft pulse specified by the user
     % is performed, immediately followed by an ideal pi/2 pulse on all spins 
@@ -27,8 +27,8 @@ function [rho_stack,fids] = Initialisation_IndependantPulse(spin_system, paramet
         parameters.pulse_dur(3),parameters.pulse_phi(3),...
         parameters.pulse_rnk(3),parameters.method);
     %Hard Pulse to rotate into xy for detection.
-    rho_stack = [parameters.rho0,rho1,rho2,rho3];
     parameters.rho0=step(spin_system,Ex,[parameters.rho0,rho1,rho2,rho3],pi/2);
+    rho_stack = parameters.rho0;
     %acquire does the Free Induction Decay Signal. Time dynamics of Detection State (param.coil)
     fids=acquire(spin_system,parameters,H,R,K);
     % now rho0 is a list of multiple density matrices called fids.
